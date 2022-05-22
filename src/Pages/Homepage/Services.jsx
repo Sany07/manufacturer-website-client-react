@@ -22,19 +22,19 @@ const Services = () => {
             img: 'whitening'
         },     
         {
-            _id: 3,
+            _id: 4,
             name: 'Teeth Whitening',
             description: '',  price: 1.9, min_order:1000, available_quantity:1000,
             img: 'whitening'
         },
         {
-            _id: 3,
+            _id: 5,
             name: 'Teeth Whitening',
             description: '',  price: 1.9, min_order:1000, available_quantity:1000,
             img: 'whitening'
         },
         {
-            _id: 3,
+            _id: 6,
             name: 'Teeth Whitening',
             description: '',  price: 1.9, min_order:1000, available_quantity:1000,
             img: 'whitening'
