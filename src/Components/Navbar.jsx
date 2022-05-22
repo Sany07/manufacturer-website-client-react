@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 // import { useLocation } from "react-router-dom";
+import { signOut } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../firebase.init';
 
 const Navbar = ({ children }) => {
+  const [user] = useAuthState(auth);
 //   const [dark, setDark] = useState(false);
 //   const { pathname } = useLocation();
 
 //   const [admin] = useAdmin();
-
+  const logout = () => {
+    signOut(auth);
+    localStorage.removeItem('accessToken');
+  };
   return (
     <div class='drawer  drawer-end'>
       <input id='my-drawer-3' type='checkbox' class='drawer-toggle' />
@@ -83,31 +90,34 @@ const Navbar = ({ children }) => {
                   Contact
                 </NavLink>
               </li>
-              <li>
-                <NavLink to='/login' className='rounded-lg'>
-                  Login
+              {user ? <>
+                <li>
+                <NavLink to='/contact' className='rounded-lg'>
+                  Contact
+                </NavLink>
+              </li>              <li>
+                <NavLink to='/contact' className='rounded-lg'>
+                  Contact
+                </NavLink>
+              </li>              <li>
+                <NavLink to='/contact' className='rounded-lg'>
+                  Dashboard
                 </NavLink>
               </li>
+                <button className="btn btn-primary btn-outline rounded-lg" onClick={logout} >Sign Out</button> 
 
-              <li class='dropdown dropdown-hover dropdown-end'>
-                <label
-                  tabindex='0'
-                  class='btn btn-primary btn-outline rounded-lg'
-                >
-                  BOOK NOW
-                </label>
-                <ul
-                  tabindex='0'
-                  class='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52'
-                >
-                  <li>
-                    <a>Item 1</a>
-                  </li>
-                  <li>
-                    <a>Item 2</a>
-                  </li>
-                </ul>
+                        </>:
+                        <>
+              <li>
+                <NavLink to='/register' className='rounded-lg'>Sign Up</NavLink>
               </li>
+              <li>
+                <NavLink to='/login' className='rounded-lg'>Login</NavLink>
+              </li>
+</>
+              }
+
+
 
             </ul>
           </div>
