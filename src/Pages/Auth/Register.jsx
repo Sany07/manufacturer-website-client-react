@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword,  useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import useToken from '../../Hooks/useToken';
 const Register = () => {
     const [createUserWithEmailAndPassword, user, loading, error] =
       useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
     const location = useLocation();
@@ -50,6 +51,7 @@ const Register = () => {
     let signInError;
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.name });
 
     }
     return (

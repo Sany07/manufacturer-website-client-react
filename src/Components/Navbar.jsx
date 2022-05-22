@@ -7,10 +7,7 @@ import auth from '../firebase.init';
 
 const Navbar = ({ children }) => {
   const [user] = useAuthState(auth);
-//   const [dark, setDark] = useState(false);
-//   const { pathname } = useLocation();
-
-//   const [admin] = useAdmin();
+  console.log(user);
   const logout = () => {
     signOut(auth);
     localStorage.removeItem('accessToken');
@@ -85,28 +82,26 @@ const Navbar = ({ children }) => {
                   Services
                 </NavLink>
               </li>
-              <li>
-                <NavLink to='/contact' className='rounded-lg'>
-                  Contact
-                </NavLink>
-              </li>
+
               {user ? <>
-                <li>
+             <li>
                 <NavLink to='/contact' className='rounded-lg'>
                   Contact
                 </NavLink>
-              </li>              <li>
-                <NavLink to='/contact' className='rounded-lg'>
-                  Contact
-                </NavLink>
-              </li>              <li>
-                <NavLink to='/contact' className='rounded-lg'>
+              </li>              
+              <li>
+                <NavLink to='/dashboard' className='rounded-lg'>
                   Dashboard
                 </NavLink>
               </li>
                 <button className="btn btn-primary btn-outline rounded-lg" onClick={logout} >Sign Out</button> 
-
-                        </>:
+                <li className="">
+                <span to='' className='rounded-lg'>
+                  {user.displayName.toUpperCase()}
+                </span>
+                  
+                </li>
+              </>:
                         <>
               <li>
                 <NavLink to='/register' className='rounded-lg'>Sign Up</NavLink>

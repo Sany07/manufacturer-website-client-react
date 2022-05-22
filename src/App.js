@@ -5,9 +5,12 @@ import Navbar from './Components/Navbar';
 import Toaster from './Components/Toaster/Toaster';
 import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import Profile from './Pages/Dashboard/Profile';
+import Review from './Pages/Dashboard/Review';
 import Home from './Pages/Homepage/Home';
 import Purchase from './Pages/Purchase';
-
+import RequireAuth from "./Utilities/RequireAuth";
 function App() {
   return (
     <>
@@ -17,7 +20,11 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path='/purchase/:id' element={<Purchase />} />
+          <Route path='/purchase/:id' element={ <RequireAuth><Purchase /></RequireAuth>} />
+          <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} >
+              <Route path="review" element={<Review/>}></Route>
+              <Route path="profile" element={<Profile/>}></Route>
+          </Route>
         </Routes>
       <Footer/>
       </Navbar>
