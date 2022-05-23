@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '../Components/LoadingSpinner/LoadingSpinner';
-
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../firebase.init.js';
 const Purchase = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const [minimumOrder, setOrder] = useState(0);
 
   const [product, setProduct] = useState([]);
   const { id } = useParams();
   useEffect(() => {
     fetch(`http://localhost:5000/product/${id}`)
       .then((res) => res.json())
-      .then((data) => setProduct(data));
+      .then((data) => {setProduct(data)
+                        setOrder(data.minimumorder)});
   }, [id]);
   if (product.length>1 ) {
     return <LoadingSpinner/>
 }
+  const checkQuantity= (e)=>{
+      setOrder(e.target.value)
+      
+      if(minimumOrder < product.minimumorder){
+          alert("can't order ")
+
+      }
+     
+  }
     return (
       <section className="text-gray-600 body-font overflow-hidden my-28">
         <div className="container px-5  mx-auto">
@@ -69,14 +82,40 @@ const Purchase = () => {
                   <span className="mr-3"><b>Min. Order: </b>{product.minimumorder} Pieces</span>
                 </div>
               </div>
-              <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900"><b>Prices: </b>${product.price} Per Piece</span>
-                <button className="flex ml-auto text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">Button</button>
-                <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                  <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-5 h-5" viewBox="0 0 24 24">
-                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-                  </svg>
-                </button>
+              <div className="">
+            <section className="text-gray-600 body-font">
+              <div className="container  py-10 mx-auto flex flex-wrap items-center">
+
+              <div className=" bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+              <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Order Quantity</h2>
+              <div className="relative mb-4">
+              <label htmlFor="full-name" className="leading-7 text-sm text-gray-600">Order Quantity</label>
+              
+              <input onKeyUp={checkQuantity} value={minimumOrder} type="number" id="order" name="orderName" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+              </div>  
+              <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Enter Your Information</h2>
+              <div className="relative mb-4">
+              <label htmlFor="full-name" className="leading-7 text-sm text-gray-600">User Name</label>
+              <input placeholder={user?.displayName} type="text" id="full-name" name="full-name" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" disabled/>
+              </div>
+              <div className="relative mb-4">
+              <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
+              <input placeholder={user?.email} type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" disabled/>
+              </div>
+              <div className="relative mb-4">
+              <label htmlFor="address" className="leading-7 text-sm text-gray-600"> Address</label>
+              <input placeholder="Address" type="text" id="address" name="address" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              </div>
+              <div className="relative mb-4">
+              <label htmlFor="phone_number" className="leading-7 text-sm text-gray-600">Phone number</label>
+              <input placeholder="Phone number" type="text" id="phone_number" name="phone_number" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              </div>
+              <button className="text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg">Purchase</button>
+ 
+              </div>
+              </div>
+            </section>
               </div>
             </div>
           </div>
