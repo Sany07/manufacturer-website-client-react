@@ -5,7 +5,7 @@ import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 
 
 const Products = () => {
-    const { data:products, isLoading, refetch } = useQuery('products', () => fetch('http://localhost:5000/products', {
+    const { data:products, isLoading, refetch } = useQuery('products', () => fetch('https://ss-manufacturer.herokuapp.com/products', {
         method: 'GET',
     }).then(res => res.json()));
     if (isLoading ) {
@@ -19,7 +19,7 @@ const Products = () => {
             </div>
             <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                 {
-                    products.map(product =><Product
+                    products?.map(product =><Product
                         key={product._id}
                         product={product}
                     ></Product>)

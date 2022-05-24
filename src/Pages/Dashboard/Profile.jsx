@@ -11,7 +11,7 @@ const Profile = () => {
     const [user] = useAuthState(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { data:profile, isLoading, refetch } = useQuery('profile', () => fetch('http://localhost:5000/userupdate', {
+    const { data:profile, isLoading, refetch } = useQuery('profile', () => fetch('https://ss-manufacturer.herokuapp.com/userupdate', {
         method: 'GET',
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -23,7 +23,7 @@ const Profile = () => {
 
     
     const onSubmit = (data) => {
-        const url = "http://localhost:5000/userupdate";
+        const url = "https://ss-manufacturer.herokuapp.com/userupdate";
         fetch(url, {
           method: "PATCH",
           headers: {

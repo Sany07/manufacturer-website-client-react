@@ -6,7 +6,7 @@ import useLoading from '../../Hooks/useLoading';
 
 const ManageProduct = () => {
     const [isLoading, setIsLoading] = useLoading();
-    const { data:products,  refetch } = useQuery('products', () => fetch('http://localhost:5000/products', {
+    const { data:products,  refetch } = useQuery('products', () => fetch('https://ss-manufacturer.herokuapp.com/products', {
         method: 'GET',
     }).then(res => res.json(), setIsLoading(false)));
     

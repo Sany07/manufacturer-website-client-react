@@ -15,7 +15,7 @@ const Order = () => {
     useEffect(() => {
         (async () => {
           try {
-            const url = `http://localhost:5000/myorder`;
+            const url = `https://ss-manufacturer.herokuapp.com/myorder`;
             const { data } = await axiosPrivate.get(url);
             console.log(data);
             setOrder(data);
@@ -23,6 +23,7 @@ const Order = () => {
           } catch (error) {
             if (error.response.status === 401 || error.response.status === 403) {
               signOut(auth);
+              localStorage.removeItem('accessToken');
             }
           }
         })();
@@ -39,7 +40,7 @@ const Order = () => {
       confirmButtonText: "Yes, Cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const url = `http://localhost:5000/order/${id}`;
+        const url = `https://ss-manufacturer.herokuapp.com/order/${id}`;
         fetch(url, {
           method: "DELETE",
         })

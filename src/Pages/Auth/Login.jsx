@@ -59,6 +59,11 @@ const Login = () => {
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password);
     }
+
+    if (token) {
+        navigate(from, { replace: true });
+      }
+
     return (
         <div className='mt-28 flex justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">

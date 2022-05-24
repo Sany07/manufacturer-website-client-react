@@ -17,7 +17,7 @@ const Reviews = () => {
         }
 
         e.preventDefault()
-        fetch('http://localhost:5000/review', {
+        fetch('https://ss-manufacturer.herokuapp.com/review', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
