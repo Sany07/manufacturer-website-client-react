@@ -8,7 +8,7 @@ const useToken = (user) => {
       const email = user?.user?.email;
       if (email) {
         const { data } = await axios.post(
-          "https://ss-hunting.herokuapp.com/login",
+          "http://localhost:5000/login",
           {
             email,
           }

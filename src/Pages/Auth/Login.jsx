@@ -18,7 +18,7 @@ const Login = () => {
     const from = location.state?.from?.pathname || "/";
     const [signInWithEmailAndPassword, user, loading, error] =
       useSignInWithEmailAndPassword(auth);
-
+    const [token] = useToken(user);
       if (user) {
         toast.success("Login Success!", {
           position: "top-right",
@@ -48,9 +48,7 @@ const Login = () => {
       if (loading) {
         return <LoadingSpinner />;
       }
-      if (useToken) {
-        navigate(from, { replace: true });
-      }
+
  
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password);

@@ -1,38 +1,94 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import LoadingSpinner from '../Components/LoadingSpinner/LoadingSpinner';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../firebase.init.js';
+import { toast } from 'react-toastify';
+import { useForm } from "react-hook-form";
+import axios from 'axios';
+
 const Purchase = () => {
   const [user, loading, error] = useAuthState(auth);
-  const [minimumOrder, setOrder] = useState(0);
-
+  const [minimumOrder, setminOrder] = useState(0);
+  const [address, setAddress] = useState();
+  const [number, setNumber] = useState();
+  const [maxOrder, setmaxOrder] = useState(0);
+  const [disaBled, setDisabled] = useState(false);
+  const { register, handleSubmit, reset } = useForm();
   const [product, setProduct] = useState([]);
   const { id } = useParams();
   useEffect(() => {
     fetch(`http://localhost:5000/product/${id}`)
       .then((res) => res.json())
       .then((data) => {setProduct(data)
-                        setOrder(data.minimumorder)});
+                        setminOrder(data.minimumorder)
+                        setmaxOrder(data.stock)
+                      });
   }, [id]);
+
+  const handleOrder = (event) => {
+    event.preventDefault();
+
+    const order = {
+        productId: product._id,
+        productName: product.name,
+        quantity:event.target.orderName.value,
+        email: user.email,
+        userName: user.displayName,
+        phone: number,
+        address: address,
+        price: parseInt(product.price) * parseInt(event.target.orderName.value)
+    }
+
+    console.log(order);
+    fetch('http://localhost:5000/order', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(order)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
+                toast('Order Successful')
+            }
+            else{
+                toast.error(`Order Faild`)
+            }
+ 
+    });
+}
+
   if (product.length>1 ) {
     return <LoadingSpinner/>
 }
   const checkQuantity= (e)=>{
-      setOrder(e.target.value)
+      setminOrder(e.target.value)
+      setmaxOrder(e.target.value)
       
-      if(minimumOrder < product.minimumorder){
-          alert("can't order ")
-
+        if(e.target.value >= product.minimumorder){
+          if(disaBled){
+            setDisabled(false)
+        }
+    }
+      if(e.target.value < product.minimumorder){
+          toast.error('Order cannot less then Minimum order')
+          setDisabled(true)
+          
+      }
+      if(e.target.value > product.stock){
+        toast.error('Your Order cannot greater then Our Stock')
+        setDisabled(true)
       }
      
   }
     return (
-      <section className="text-gray-600 body-font overflow-hidden my-28">
+      <section className="text-gray-600 body-font  my-28">
         <div className="container px-5  mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={product.image} />
-            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+            <div className=" lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">NAME</h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product.name}</h1>
               <div className="flex mb-4">
@@ -86,34 +142,37 @@ const Purchase = () => {
               <div className="">
             <section className="text-gray-600 body-font">
               <div className="container  py-10 mx-auto flex flex-wrap items-center">
+            <form onSubmit={handleOrder}>
 
+         
               <div className=" bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
               <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Order Quantity</h2>
               <div className="relative mb-4">
               <label htmlFor="full-name" className="leading-7 text-sm text-gray-600">Order Quantity</label>
               
-              <input onKeyUp={checkQuantity} value={minimumOrder} type="number" id="order" name="orderName" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+              <input onChange={checkQuantity} value={minimumOrder} type="number" id="orderName" name="orderName" min={product.minimumorder} className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
               </div>  
               <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Enter Your Information</h2>
               <div className="relative mb-4">
               <label htmlFor="full-name" className="leading-7 text-sm text-gray-600">User Name</label>
-              <input placeholder={user?.displayName} type="text" id="full-name" name="full-name" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" disabled/>
+              <input placeholder={user?.displayName} type="text" id="full-name" name="full-name" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" disabled />
               </div>
               <div className="relative mb-4">
               <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-              <input placeholder={user?.email} type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" disabled/>
+              <input placeholder={user?.email} type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" disabled />
               </div>
               <div className="relative mb-4">
               <label htmlFor="address" className="leading-7 text-sm text-gray-600"> Address</label>
-              <input placeholder="Address" type="text" id="address" name="address" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              <input onChange={(e)=>setAddress(e.target.value)}  placeholder="Address" type="text" id="address" name="address" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
               </div>
               <div className="relative mb-4">
               <label htmlFor="phone_number" className="leading-7 text-sm text-gray-600">Phone number</label>
-              <input placeholder="Phone number" type="text" id="phone_number" name="phone_number" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              <input  onChange={(e)=>setNumber(e.target.value)} placeholder="Phone number" type="text" id="phone_number" name="phone_number"  className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
               </div>
-              <button className="text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg">Purchase</button>
+              <button  className={ disaBled ? "bg-pink-200 text-white  border-0 py-2 px-8 focus:outline-none hover:bg-pink-700 rounded text-lg":"bg-pink-500 text-white  border-0 py-2 px-8 focus:outline-none hover:bg-pink-700 rounded text-lg" } disabled={ disaBled ? 'disabled' :''}>Make Order</button>
  
               </div>
+              </form>
               </div>
             </section>
               </div>

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../firebase.init';
+import { toast } from "react-toastify";
 
 const Navbar = ({ children }) => {
   const [user] = useAuthState(auth);
-  console.log(user);
+  const navigate = useNavigate();
+
   const logout = () => {
     signOut(auth);
+    toast.success("Logout Syccessful");
     localStorage.removeItem('accessToken');
+    navigate("/login");
   };
+
   return (
     <div className='drawer  drawer-end'>
       <input id='my-drawer-3' type='checkbox' className='drawer-toggle' />

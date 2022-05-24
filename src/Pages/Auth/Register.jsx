@@ -45,9 +45,7 @@ const Register = () => {
           toastId: "reg-error1",
         });
       }
-      if (useToken) {
-        navigate(from, { replace: true });
-      }
+
     let signInError;
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
