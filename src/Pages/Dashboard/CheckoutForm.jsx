@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { toast } from 'react-toastify';
 
-const CheckoutForm = ({ appointment }) => {
+const CheckoutForm = ({ order }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [cardError, setCardError] = useState('');
@@ -10,25 +11,25 @@ const CheckoutForm = ({ appointment }) => {
     const [transactionId, setTransactionId] = useState('');
     const [clientSecret, setClientSecret] = useState('');
 
-    const { _id, price, patient, patientName } = appointment;
+    const { _id, price,  productName, email } = order;
 
-    // useEffect(() => {
-    //     fetch('https://secret-dusk-46242.herokuapp.com/create-payment-intent', {
-    //         method: 'POST',
-    //         headers: {
-    //             'content-type': 'application/json',
-    //             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    //         },
-    //         body: JSON.stringify({ price })
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             if (data?.clientSecret) {
-    //                 setClientSecret(data.clientSecret);
-    //             }
-    //         });
+    useEffect(() => {
+        fetch('http://localhost:5000/create-payment-intent', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify({ price })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.clientSecret) {
+                    setClientSecret(data.clientSecret);
+                }
+            });
 
-    // }, [price])
+    }, [price])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -58,8 +59,8 @@ const CheckoutForm = ({ appointment }) => {
                 payment_method: {
                     card: card,
                     billing_details: {
-                        name: patientName,
-                        email: patient
+                        name: productName,
+                        email: email
                     },
                 },
             },
@@ -72,15 +73,14 @@ const CheckoutForm = ({ appointment }) => {
         else {
             setCardError('');
             setTransactionId(paymentIntent.id);
-            console.log(paymentIntent);
             setSuccess('Congrats! Your payment is completed.')
             
             //store payment on database
             const payment = {
-                appointment: _id,
+                order: _id,
                 transactionId: paymentIntent.id
             }
-            fetch(`https://secret-dusk-46242.herokuapp.com/booking/${_id}`, {
+            fetch(`http://localhost:5000/order/${_id}`, {
                 method: 'PATCH',
                 headers: {
                     'content-type': 'application/json',
@@ -94,6 +94,12 @@ const CheckoutForm = ({ appointment }) => {
             })
 
         }
+    }
+
+    if(success){
+        toast.success('Payment Succesfull', {
+            toastId: "paymentsuccess1",
+          });
     }
     return (
         <>
@@ -114,8 +120,8 @@ const CheckoutForm = ({ appointment }) => {
                         },
                     }}
                 />
-                <button className='btn btn-success btn-sm mt-4' type="submit" disabled={!stripe || !clientSecret || success}>
-                    Pay
+                <button pointer="cursor" className='px-10 mt-10 ml-1  text-white bg-green-500 border-0 py-2 px-2 focus:outline-none hover:bg-green-600 rounded text-lg'  disabled={!stripe || !clientSecret || success}>
+                    {success ? "Paid" : "Pay Now"  }
                 </button>
             </form>
             {

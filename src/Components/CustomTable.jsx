@@ -23,12 +23,12 @@ const CustomTable = ({orders,handleDelete}) => {
                     <p><span className='text-success'>Paid</span></p>
                     <p>Transaction id: <span className='text-success'>{order.transactionId}</span></p>
                 </div>}
-                    <button
+                {(!order.paid) &&     <button
                   className="ml-1 inline-flex text-white bg-red-500 border-0 py-2 px-2 focus:outline-none hover:bg-red-600 rounded text-lg"
                   onClick={() => handleDelete(order._id)}
                 >
                   Cancel Order
-                </button>
+                </button>}
                     </th>
                 </tr>
           ))}

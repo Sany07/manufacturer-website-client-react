@@ -2,15 +2,17 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import ProductTable from '../../Components/ProductTable';
-import TableRow from '../../Components/TableRow';
+import useLoading from '../../Hooks/useLoading';
 
 const ManageProduct = () => {
-
-    const { data:products, isLoading, refetch } = useQuery('products', () => fetch('http://localhost:5000/products', {
+    const [isLoading, setIsLoading] = useLoading();
+    const { data:products,  refetch } = useQuery('products', () => fetch('http://localhost:5000/products', {
         method: 'GET',
-    }).then(res => res.json()));
+    }).then(res => res.json(), setIsLoading(false)));
     
-
+    if (isLoading) {
+        return <LoadingSpinner />;
+      }
 
     return (
         <div>

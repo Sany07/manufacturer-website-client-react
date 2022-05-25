@@ -3,7 +3,7 @@ import useLoading from '../../Hooks/useLoading';
 import axiosPrivate from '../../Utilities/Api';
 import { signOut } from "firebase/auth";
 import auth from '../../firebase.init';
-import CustomTable from '../../Components/CustomTable';
+import CustomTableAdmin from '../../Components/CustomTableAdmin';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import { toast } from 'react-toastify';
 import Swal from "sweetalert2";
@@ -27,7 +27,7 @@ const ManageAllOrder = () => {
             }
           }
         })();
-      }, []);
+      }, [orders]);
   // Delete Product
   const handleDelete = (id) => {
     MySwal.fire({
@@ -57,6 +57,28 @@ const ManageAllOrder = () => {
       }
     });
   };
+  // approve order
+
+  const handleApprove=(id)=>{
+        
+    fetch(`http://localhost:5000/order/approve/${id}`, {
+        method: 'PUT',
+        headers: {
+            authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+    })
+        .then(res => {
+            if(res.status === 403){
+                toast.error('Failed to Make Approve');
+            }
+            return res.json()})
+        .then(data => {
+            if (data.modifiedCount > 0) {
+                toast.success(`Order Approved`);
+            }
+
+        })
+}
       if (isLoading) {
         return <LoadingSpinner />;
       }
@@ -67,14 +89,16 @@ const ManageAllOrder = () => {
             <thead>
             <tr>
                 <th>Product Name</th>
+                <th>User</th>
                 <th>Quantity</th>
                 <th>Total Price</th>
+                <th>Status</th>
                 <th />
             </tr>
             </thead>
             <tbody>
             {orders.length > 0 ? (
-                  <CustomTable orders={orders} handleDelete={handleDelete}  />
+                  <CustomTableAdmin orders={orders} handleDelete={handleDelete} handleApprove={handleApprove}  />
                 ) : (
                   <span className="ml-5">No Order Found</span>
                 )}
