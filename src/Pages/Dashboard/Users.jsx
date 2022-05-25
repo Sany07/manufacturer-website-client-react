@@ -4,7 +4,7 @@ import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import TableRow from '../../Components/TableRow';
 
 const Users = () => {
-    const { data: users, isLoading, refetch } = useQuery('users', () => fetch('https://ss-manufacturer.herokuapp.com/users', {
+    const { data: users, isLoading, refetch } = useQuery('users', () => fetch('https://ss-manu09.herokuapp.com/users', {
         method: 'GET',
         headers:{
             authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -15,15 +15,15 @@ const Users = () => {
     }
     return (
         <div>
-            <h2 className="text-2xl">Total Users: {users.length}</h2>
-            <div class="overflow-x-auto">
-                <table class="table w-full">
+      <h2 className="text-2xl text-gray-900 mt-10 ml-20">Total Orders: {users?.length}</h2>
+            <div class="overflow-x-auto mt-10">
+                <table class="table  text-gray-900 overflow-x-auto w-full">
                     <thead>
                         <tr>
                             <th></th>
                             <th>Name</th>
                             <th>Status</th>
-                            <th>Remove</th>
+                            {/* <th>Remove</th> */}
                         </tr>
                     </thead>
                     <tbody>

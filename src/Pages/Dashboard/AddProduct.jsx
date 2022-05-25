@@ -11,7 +11,7 @@ const AddProduct = () => {
     // const { data: product, isLoading } = useQuery('product', () => fetch('https://secret-dusk-46242.herokuapp.com/service').then(res => res.json()))
 
     const onSubmit = async data => {
-        fetch('https://ss-manufacturer.herokuapp.com/product', {
+        fetch('https://ss-manu09.herokuapp.com/product', {
             method: 'POST',
             headers: {
                 "content-type": "application/json",

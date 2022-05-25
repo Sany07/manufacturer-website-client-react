@@ -8,6 +8,7 @@ import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import Blogs from './Pages/Blogs';
 import AddProduct from './Pages/Dashboard/AddProduct';
+import Dash from './Pages/Dashboard/Dash';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import ManageAllOrder from './Pages/Dashboard/ManageAllOrders';
 import ManageProduct from './Pages/Dashboard/ManageProduct';
@@ -37,6 +38,7 @@ function App() {
           <Route path='/purchase/:id' element={ <RequireAuth><Purchase /></RequireAuth>} />
           <Route path='/payment/:id' element={ <RequireAuth><Payment /></RequireAuth>} />
           <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} >
+              <Route path="index" element={<Dash/>}></Route>
               <Route path="review" element={<Reviews/>}></Route>
               <Route path="orders" element={<Order/>}></Route>
               <Route path="profile" element={<Profile/>}></Route>

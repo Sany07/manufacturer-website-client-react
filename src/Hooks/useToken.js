@@ -8,7 +8,7 @@ const useToken = (user) => {
       const email = user?.user?.email;
       if (email) {
 
-          fetch('https://ss-manufacturer.herokuapp.com/login', {
+          fetch('https://ss-manu09.herokuapp.com/login', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

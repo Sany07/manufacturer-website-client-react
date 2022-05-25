@@ -20,7 +20,7 @@ const Banner = () => {
                 data-aos-duration='900'
                 class='text-5xl font-bold'
                 >
-                Professional Cleaning Service
+                Electric Saw Collection
                 </h1>
                 <p
                 data-aos='fade-right'
@@ -28,19 +28,18 @@ const Banner = () => {
                 data-aos-duration='800'
                 class='py-6 max-w-xl'
                 >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has
+                We provide best Electric Saw. We also accept Custom order. Contact Us
                 </p>
                 <button
                 data-aos='zoom-in'
                 data-aos-delay='1300'
-                class='btn btn-primary'
+                class='btn btn-primary text-white'
                 >
-                Get Started
+                Buy Now
                 </button>
             </div>
-            <div className='h-[60vh] shrink-0'>
-                <img src="https://api.lorem.space/image/pizza?w=400&h=300&hash=A89D0DE6" class='h-full' alt='' />
+            <div className='h-[60vh] shrink-0 mt-10'>
+                <img src="https://img.freepik.com/free-vector/gradient-sale-background_23-2148934477.jpg" class='' alt='' />
             </div>
             </div>
         </div>

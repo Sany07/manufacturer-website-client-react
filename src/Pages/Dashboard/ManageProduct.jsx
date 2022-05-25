@@ -6,7 +6,7 @@ import useLoading from '../../Hooks/useLoading';
 
 const ManageProduct = () => {
     const [isLoading, setIsLoading] = useLoading();
-    const { data:products,  refetch } = useQuery('products', () => fetch('https://ss-manufacturer.herokuapp.com/products', {
+    const { data:products,  refetch } = useQuery('products', () => fetch('https://ss-manu09.herokuapp.com/products', {
         method: 'GET',
     }).then(res => res.json(), setIsLoading(false)));
     
@@ -16,9 +16,9 @@ const ManageProduct = () => {
 
     return (
         <div>
-            <h2 className="text-2xl">Total Users: {products?.length}</h2>
-            <div class="overflow-x-auto">
-                <table class="table w-full">
+            <h2 className="text-2xl text-gray-900 mt-10 ml-20">Total Product: {products?.length}</h2>
+            <div class="overflow-x-auto mt-20">
+                <table class="table text-gray-900 overflow-x-auto w-full">
                     <thead>
                         <tr>
                             <th></th>

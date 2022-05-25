@@ -18,7 +18,7 @@ const Purchase = () => {
   const [product, setProduct] = useState([]);
   const { id } = useParams();
   useEffect(() => {
-    fetch(`https://ss-manufacturer.herokuapp.com/product/${id}`)
+    fetch(`https://ss-manu09.herokuapp.com/product/${id}`)
       .then((res) => res.json())
       .then((data) => {setProduct(data)
                         setminOrder(data.minimumorder)
@@ -41,7 +41,7 @@ const Purchase = () => {
     }
 
     console.log(order);
-    fetch('https://ss-manufacturer.herokuapp.com/order', {
+    fetch('https://ss-manu09.herokuapp.com/order', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'

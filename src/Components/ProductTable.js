@@ -21,7 +21,7 @@ const ProductTable = ({ product,index, refetch }) => {
           confirmButtonText: "Yes, Delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            const url = `https://ss-manufacturer.herokuapp.com/product/${id}`;
+            const url = `https://ss-manu09.herokuapp.com/product/${id}`;
             fetch(url, {
               method: "DELETE",
               headers: {

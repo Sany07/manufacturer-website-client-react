@@ -5,7 +5,7 @@ import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 
 
 const Products = () => {
-    const { data:products, isLoading, refetch } = useQuery('products', () => fetch('https://ss-manufacturer.herokuapp.com/products', {
+    const { data:products, isLoading, refetch } = useQuery('products', () => fetch('https://ss-manu09.herokuapp.com/products', {
         method: 'GET',
     }).then(res => res.json()));
     if (isLoading ) {

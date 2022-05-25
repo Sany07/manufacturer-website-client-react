@@ -43,7 +43,7 @@ const Navbar = ({ children }) => {
               </svg>
             </label>
           )} */}
-          <div className='flex-1 px-2 mx-2 text-2xl'>Clean Co.</div>
+          <div className='flex-1 px-2 mx-2 text-2xl'>SS <span className="text-secondary">Manufacturer</span></div>
           <div className='flex-none lg:hidden'>
             <label htmlFor='my-drawer-3' className='btn btn-square btn-ghost'>
               <svg
@@ -69,11 +69,7 @@ const Navbar = ({ children }) => {
                   Home
                 </NavLink>
               </li>
-              <li>
-                <NavLink to='/about' className='rounded-lg'>
-                  About
-                </NavLink>
-              </li>
+  
               <li>
                 <NavLink to='/blogs' className='rounded-lg'>
                   Blogs
@@ -122,11 +118,6 @@ const Navbar = ({ children }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/about' className='rounded-lg'>
-              About
-            </NavLink>
-          </li>
-          <li>
             <NavLink to='/blogs' className='rounded-lg'>
               Blogs
             </NavLink>
@@ -142,9 +133,7 @@ const Navbar = ({ children }) => {
           {user ? <>
              <li>
 
-                <NavLink to='/contact' className='rounded-lg'>
-                  Contact
-                </NavLink>
+
               </li>              
               <li>
                 <NavLink to='/dashboard' className='rounded-lg'>

@@ -17,7 +17,7 @@ const Reviews = () => {
         }
 
         e.preventDefault()
-        fetch('https://ss-manufacturer.herokuapp.com/review', {
+        fetch('https://ss-manu09.herokuapp.com/review', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

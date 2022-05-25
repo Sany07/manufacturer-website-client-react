@@ -15,7 +15,7 @@ const Order = () => {
     useEffect(() => {
         (async () => {
           try {
-            const url = `https://ss-manufacturer.herokuapp.com/myorder`;
+            const url = `https://ss-manu09.herokuapp.com/myorder`;
             const { data } = await axiosPrivate.get(url);
             console.log(data);
             setOrder(data);
@@ -40,7 +40,7 @@ const Order = () => {
       confirmButtonText: "Yes, Cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const url = `https://ss-manufacturer.herokuapp.com/order/${id}`;
+        const url = `https://ss-manu09.herokuapp.com/order/${id}`;
         fetch(url, {
           method: "DELETE",
         })
@@ -61,12 +61,12 @@ const Order = () => {
         return <LoadingSpinner />;
       }
     return (
-        <div className="mt-28 overflow-x-auto w-full">
+        <div className="mt-28 text-gray-900 overflow-x-auto w-full">
                     <table className="table w-full">
             {/* head */}
             <thead>
             <tr>
-                <th>Product Name</th>
+                <th className='text-gray-900'>Product Name</th>
                 <th>Quantity</th>
                 <th>Total Price</th>
                 <th />

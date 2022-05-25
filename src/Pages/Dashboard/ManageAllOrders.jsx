@@ -16,7 +16,7 @@ const ManageAllOrder = () => {
     useEffect(() => {
         (async () => {
           try {
-            const url = `https://ss-manufacturer.herokuapp.com/allorder`;
+            const url = `https://ss-manu09.herokuapp.com/allorder`;
             const { data } = await axiosPrivate.get(url);
             console.log(data);
             setOrder(data);
@@ -40,7 +40,7 @@ const ManageAllOrder = () => {
       confirmButtonText: "Yes, Cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const url = `https://ss-manufacturer.herokuapp.com/order/${id}`;
+        const url = `https://ss-manu09.herokuapp.com/order/${id}`;
         fetch(url, {
           method: "DELETE",
         })
@@ -61,7 +61,7 @@ const ManageAllOrder = () => {
 
   const handleApprove=(id)=>{
         
-    fetch(`https://ss-manufacturer.herokuapp.com/order/approve/${id}`, {
+    fetch(`https://ss-manu09.herokuapp.com/order/approve/${id}`, {
         method: 'PUT',
         headers: {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -83,8 +83,10 @@ const ManageAllOrder = () => {
         return <LoadingSpinner />;
       }
     return (
-        <div className="mt-28 overflow-x-auto w-full">
-                    <table className="table w-full">
+      <>
+      <h2 className="text-2xl text-gray-900 mt-10 ml-20">Total Orders: {orders?.length}</h2>
+      <div class="overflow-x-auto mt-20">
+          <table className="table  text-gray-900 overflow-x-auto w-full">
             {/* head */}
             <thead>
             <tr>
@@ -107,10 +109,8 @@ const ManageAllOrder = () => {
          
         </table>
 
-
-
         </div>
-
+</>
     );
 };
 
