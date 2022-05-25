@@ -28,7 +28,7 @@ const TableRow = ({ user,index, refetch }) => {
             <th>{index+1}</th>
             <td>{email}</td>
             <td>
-                {role !== 'admin' && <button onClick={makeAdmin} class="btn btn-xs">Make Admin</button>} 
+                {role !== 'admin' && <button onClick={makeAdmin} class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">Make Admin</button>} 
                 {role === 'admin' && <span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-200 dark:text-indigo-900">Admin</span>} 
             </td>
             <td>

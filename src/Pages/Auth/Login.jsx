@@ -9,12 +9,13 @@ import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import { toast } from 'react-toastify';
 import SocialLogin from './SocialLogin';
 import useToken from '../../Hooks/useToken';
+import useLoading from '../../Hooks/useLoading';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
     const location = useLocation();
-  
+    const [isLoading, setIsLoading] = useLoading();
     const from = location.state?.from?.pathname || "/";
     const [signInWithEmailAndPassword, user, loading, error] =
       useSignInWithEmailAndPassword(auth);
@@ -49,7 +50,12 @@ const Login = () => {
         return <LoadingSpinner />;
       }
 
- 
+      if (isLoading) {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+        return <LoadingSpinner />;
+      }
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password);
     }

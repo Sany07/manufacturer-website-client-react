@@ -7,16 +7,18 @@ import { useForm } from 'react-hook-form';
 import SocialLogin from './SocialLogin';
 import { toast } from 'react-toastify';
 import useToken from '../../Hooks/useToken';
+import useLoading from '../../Hooks/useLoading';
 
 const Register = () => {
     const [createUserWithEmailAndPassword, user, loading, error] =
-      useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+    useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+    const [isLoading, setIsLoading] = useLoading();
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
-
+    const [token] = useToken(user);
     if (loading) {
         return <LoadingSpinner />;
       }
@@ -45,7 +47,15 @@ const Register = () => {
           toastId: "reg-error1",
         });
       }
-
+      if (token) {
+        navigate(from, { replace: true });
+      }
+      if (isLoading) {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+        return <LoadingSpinner />;
+      }
     let signInError;
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);

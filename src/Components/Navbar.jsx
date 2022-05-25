@@ -69,24 +69,21 @@ const Navbar = ({ children }) => {
                   Home
                 </NavLink>
               </li>
-              {/* {admin && (
-                <li>
-                  <NavLink to='/dashboard' className='rounded-lg'>
-                    Dashboard
-                  </NavLink>
-                </li>
-              )} */}
               <li>
                 <NavLink to='/about' className='rounded-lg'>
                   About
                 </NavLink>
               </li>
               <li>
-                <NavLink to='/services' className='rounded-lg'>
-                  Services
+                <NavLink to='/blogs' className='rounded-lg'>
+                  Blogs
                 </NavLink>
               </li>
-
+              <li>
+            <NavLink to='/portfolio' className='rounded-lg'>
+                My Portfolio
+            </NavLink>
+          </li>
               {user ? <>
              <li>
                 <NavLink to='/contact' className='rounded-lg'>
@@ -113,10 +110,8 @@ const Navbar = ({ children }) => {
               <li>
                 <NavLink to='/login' className='rounded-lg'>Login</NavLink>
               </li>
-</>
+              </>
               }
-
-
 
             </ul>
           </div>
@@ -137,8 +132,13 @@ const Navbar = ({ children }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/services' className='rounded-lg'>
-              Services
+            <NavLink to='/blogs' className='rounded-lg'>
+              Blogs
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/portfolio' className='rounded-lg'>
+                My Portfolio
             </NavLink>
           </li>
           <li>
@@ -146,29 +146,37 @@ const Navbar = ({ children }) => {
               Contact
             </NavLink>
           </li>
-          <li>
-            <NavLink to='/login' className='rounded-lg'>
-              Login
-            </NavLink>
-          </li>
-          <div
-            tabIndex='0'
-            className='collapse collapse-arrow border border-base-300 bg-base-100 rounded-box'
-          >
-            <div className='collapse-title text-xl font-medium'>Book Now</div>
-            <div className='collapse-content'>
-              <li>
+        
+          {user ? <>
+             <li>
+
                 <NavLink to='/contact' className='rounded-lg'>
-                  Quick book
+                  Contact
                 </NavLink>
+              </li>              
+              <li>
+                <NavLink to='/dashboard' className='rounded-lg'>
+                  Dashboard
+                </NavLink>
+              </li>
+                <button className="btn btn-primary btn-outline rounded-lg" onClick={logout} >Sign Out</button> 
+                <li className="">
+                <span to='' className='rounded-lg'>
+                  {user.displayName?.toUpperCase()}
+                </span>
+                  
+                </li>
+              </>:
+                        <>
+              <li>
+                <NavLink to='/register' className='rounded-lg'>Sign Up</NavLink>
               </li>
               <li>
-                <NavLink to='/login' className='rounded-lg'>
-                  Pre book
-                </NavLink>
+                <NavLink to='/login' className='rounded-lg'>Login</NavLink>
               </li>
-            </div>
-          </div>
+              </>
+              }
+        
         </ul>
       </div>
     </div>

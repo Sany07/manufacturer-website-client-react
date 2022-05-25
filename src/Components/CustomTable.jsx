@@ -16,7 +16,7 @@ const CustomTable = ({orders,handleDelete}) => {
                         {order.price}
                     </td>
                     <th>
-                    {(order.price && !order.paid) && <NavLink to={`/dashboard/payment/${order._id}`}>                    <button
+                    {(order.price && !order.paid) && <NavLink to={`/payment/${order._id}`}>                    <button
                   className="ml-1 inline-flex text-white bg-green-500 border-0 py-2 px-2 focus:outline-none hover:bg-green-600 rounded text-lg"
                 >Pay</button></NavLink>}
                 {(order.price && order.paid) && <div>
