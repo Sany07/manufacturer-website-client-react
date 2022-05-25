@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const CustomTable = ({orders,handleDelete}) => {
     return (
@@ -15,12 +16,13 @@ const CustomTable = ({orders,handleDelete}) => {
                         {order.price}
                     </td>
                     <th>
-                    <button
+                    {(order.price && !order.paid) && <NavLink to={`/dashboard/payment/${order._id}`}>                    <button
                   className="ml-1 inline-flex text-white bg-green-500 border-0 py-2 px-2 focus:outline-none hover:bg-green-600 rounded text-lg"
-                >
-                  Pay Now
-                </button>
-
+                >Pay</button></NavLink>}
+                {(order.price && order.paid) && <div>
+                    <p><span className='text-success'>Paid</span></p>
+                    <p>Transaction id: <span className='text-success'>{order.transactionId}</span></p>
+                </div>}
                     <button
                   className="ml-1 inline-flex text-white bg-red-500 border-0 py-2 px-2 focus:outline-none hover:bg-red-600 rounded text-lg"
                   onClick={() => handleDelete(order._id)}
