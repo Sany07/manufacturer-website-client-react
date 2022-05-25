@@ -12,23 +12,23 @@ const CheckoutForm = ({ appointment }) => {
 
     const { _id, price, patient, patientName } = appointment;
 
-    useEffect(() => {
-        fetch('https://secret-dusk-46242.herokuapp.com/create-payment-intent', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            },
-            body: JSON.stringify({ price })
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data?.clientSecret) {
-                    setClientSecret(data.clientSecret);
-                }
-            });
+    // useEffect(() => {
+    //     fetch('https://secret-dusk-46242.herokuapp.com/create-payment-intent', {
+    //         method: 'POST',
+    //         headers: {
+    //             'content-type': 'application/json',
+    //             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    //         },
+    //         body: JSON.stringify({ price })
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data?.clientSecret) {
+    //                 setClientSecret(data.clientSecret);
+    //             }
+    //         });
 
-    }, [price])
+    // }, [price])
 
     const handleSubmit = async (event) => {
         event.preventDefault();

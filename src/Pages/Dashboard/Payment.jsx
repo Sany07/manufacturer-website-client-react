@@ -26,18 +26,20 @@ const Payment = () => {
 
     return (
         <div>
-            <div class="card w-50 max-w-md bg-base-100 shadow-xl my-12">
-                <div class="card-body">
-                    <p className="text-success font-bold">Hello, {order.name}</p>
-                    <h2 class="card-title">Please Pay for {order.price}</h2>
-                    <p>Your Appointment: <span className='text-orange-700'>{order.date}</span> at {order.slot}</p>
-                    <p>Please pay: ${order.price}</p>
+            <div className="card mx-auto w-2/4  bg-base-100 shadow-xl  mt-28">
+            <div className="card-body">
+                <h2 className="card-title">{order.productName}</h2>
+                <p>Quantity: {order.quantity} </p>
+                <p>Price: {order.price} </p>
+                <div className="card-actions justify-end">
+                <button className="btn btn-primary">Buy Now</button>
                 </div>
             </div>
+            </div>
+
             <div class="card flex-shrink-0 w-50 max-w-md shadow-2xl bg-base-100">
                 <div class="card-body">
                     <Elements stripe={stripePromise}>
-                        <CheckoutForm order={order} />
                     </Elements>
                 </div>
             </div>
